@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>spawnmenu | shira.at</title>
+  <style>
+  body {
+  font-family: Verdana, Arial;
+  background: #333;
+  font-size: 1.1em;
+  line-height: 1.5em;
+  color: white;
+  }
+  pre{
+    font-family: monospace;
+    background-color:#F0F0F0;
+    white-space: pre-wrap;
+  }
+  span{
+    font-family: monospace;
+    background-color:#F0F0F0;
+  }
+  h1, h2, h3, h4, h5, h6 {
+     color: #FFFFFF;
+  }
+  li{color:white;}
+  a{
+    color: white;
+    text-decoration: none;
+    margin-right:2px;
+  }
+  #logo {
+    max-width: 190px;
+  }
+  #sidebar {
+      width: 250px;
+      height: 100%;
+      font-size: 0.8em;
+      background: #1d1d1d;
+      position: fixed; 
+      z-index: 1;
+      top: 0;
+      left: 0;
+      color: #fff000;
+      overflow-y: auto;
+  }
+  #divlogo {
+      padding: 20px;
+      background: #212121;
+      //height: 80px;
+  }
+  #navlist {
+      padding: 20px 0;
+  }
+  #sidebar ul li a {
+      padding: 10px;
+      font-size: 1.1em;
+      display: block;
+  }
+  a:hover {
+      color: #000000;
+      background: #FFFFFF;
+  }
+  #content {
+      margin-left: 250px;
+      padding: 40px;
+      background-color: #333333;
+  }
+  @media only screen and (max-width: 768px) {
+    #sidebar{z-index:auto;position:static;width:98%;background: #333;border-bottom:2px solid white;}
+    #content{margin-left:0px;padding:5px;}
+  }
+  </style>
+  <link rel="icon" type="image/png" href="icon.png">
+  <script src="proplist.js"></script>
+</head>
+<body>
+<nav id="sidebar">
+  <div id="divlogo">
+    <img width="128" height="128" id="logo" src="icon.png">
+  </div>
+  <ul id="navlist">
+    <!--<li><p>Search:<input id="search" type="text"></p></li>-->
+  </ul>
+</nav>
+<div id="content">
+  <h1 id="headline">Props!</h1>
+  <p id="main">
+  </p>
+</div>
+<script>
+//alert(props["Construction Props"][1]);
+//createNewCategory("->Proplist");
+for (var el in props){
+  createNewCategory(el);
+}
+
+function createNewCategory(name){
+  var node = document.createElement("li");
+  var lnk = document.createElement("a");
+  lnk.href = "#main";
+  lnk.onclick = function(){ selectCategory(name);}
+  var textnode = document.createTextNode(name);
+  node.appendChild(lnk);
+  lnk.appendChild(textnode);
+  document.getElementById("navlist").appendChild(node);
+}
+
+function selectCategory(name){
+  if (!name in props){return;}
+  document.getElementById("main").innerHTML = "";
+  document.getElementById("headline").innerText = name;
+  for (var el in props[name]){
+    el = props[name][el].split("/").join("-") + ".png";
+    var node = document.createElement("a");
+    var img = document.createElement("img");
+    node.href = "images/"+el;
+    node.target = "_blank";
+    img.width = "64";
+    img.height = "64";
+    img.src = "images/"+el;
+    node.appendChild(img);
+    document.getElementById("main").appendChild(node);
+  }
+}
+</script>
+</body>
+</html>
